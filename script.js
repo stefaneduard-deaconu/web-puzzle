@@ -1,42 +1,3 @@
-var puzzlePieces = [
-    {
-        "id": "1",
-        "src": "1.jpg"
-    },
-    {
-        "id": "2",
-        "src": "2.jpg"
-    },
-    {
-        id: "3",
-        src: "3.jpg"
-    },
-    {
-        id: "4",
-        src: "4.jpg"
-    },
-    {
-        id: "5",
-        src: "5.jpg"
-    },
-    {
-        id: "6",
-        src: "6.jpg"
-    },
-    {
-        id: "7",
-        src: "7.jpg"
-    },
-    {
-        id: "8",
-        src: "8.jpg"
-    },
-    {
-        id: "9",
-        src: "9.jpg"
-    }
-]
-
 //where we need to fit the pieces
 var piecePlaces = {}
 
@@ -44,6 +5,34 @@ window.onload = function() {
 
     var pictureDiv = document.getElementById('picture')
     var puzzleDiv = document.getElementById('puzzle')
+
+    // doua tipuri de a deschide
+    pictureDiv.addEventListener('drop', function(e) {
+        console.log('File dropped');
+        ev.preventDefault();
+      
+        if (e.dataTransfer.items) {
+          // Use DataTransferItemList interface to access the file(s)
+          for (var i = 0; i < e.dataTransfer.items.length; i++) {
+            // Alegem doar fisierele, deci pentru fiecare fisier:
+            if (e.dataTransfer.items[i].kind === 'file') {
+              var file = ev.dataTransfer.items[i].getAsFile();
+              console.log('... item[' + i + '].name = ' + file.name);
+            }
+          }
+        } else {
+          // Use DataTransfer interface to access the file(s)
+          for (var i = 0; i < e.dataTransfer.files.length; i++) {
+            console.log('... file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
+          }
+        }
+        // pictureDiv.children[0].src = 
+    })
+    pictureDiv.addEventListener('dragover', function(e) {
+        ev.preventDefault();
+    })
+
+
     pictureDiv.children[0].src = `./media/puzzle.jpg`
 
     // the image is loaded
@@ -52,9 +41,9 @@ window.onload = function() {
     
 
     console.log("here")
-    for (let piece of puzzlePieces) {
+    for (let id of [1,2,3,4,5,6,7,8,9]) {
         var spot = document.createElement("div")
-        spot.id = `spot${piece["id"]}`
+        spot.id = `spot${id}`
         
             
         //generate a random location, on the screen, for the top-left location
@@ -69,12 +58,12 @@ window.onload = function() {
         spot.style.width = pieceWidth
         spot.style.height = pieceHeight
 
-        if (parseInt(puzzlePieces.indexOf(piece)) % 3 == 0) { // do this on resize :)))
+        if (parseInt((id - 1)) % 3 == 0) { // do this on resize :)))
             spot.style.marginLeft = (width - 3 * pieceWidth - 6) / 2
         }
         
-        let rowNum = parseInt(puzzlePieces.indexOf(piece) / 3)
-        let colNum = puzzlePieces.indexOf(piece) % 3
+        let rowNum = parseInt((id - 1) / 3)
+        let colNum = (id - 1) % 3
         console.log(spot)
         console.log(rowNum)
         puzzleDiv.children[rowNum].appendChild(spot)
@@ -86,12 +75,12 @@ window.onload = function() {
         image.style.backgroundSize = '300%'
         image.style.backgroundPositionX = `${50 * colNum}%`
         image.style.backgroundPositionY = `${50 * rowNum}%`
-        image.style.zIndex = puzzlePieces.indexOf(piece)
+        image.style.zIndex = (id - 1)
         image.style.width = pieceWidth
         image.style.height = pieceHeight
 
         // modify in some way
-        image.id = `piece${piece["id"]}`
+        image.id = `piece${id}`
 
         image.draggable = true
         image.ondragstart = function(e) {
@@ -158,7 +147,7 @@ window.onload = function() {
         puzzleDiv.appendChild(image)
     }
 
-    
+    // this is after adding all the pieces
     for (let piece of document.querySelectorAll("#puzzle>.row>div")) {
         var pieceBounds = piece.getBoundingClientRect()
         piecePlaces[piece.id] = {
