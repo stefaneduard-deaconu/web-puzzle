@@ -19,11 +19,14 @@
 }
 
 
-
+#picture:hover {
+    z-index: 10;
+}
 #picture>img:hover {
+    /* position: relative; */
     height: 90vh;
-    
-    z-index: -1;
+    /* margin-left: 5vw; */
+    z-index: 10;
 
 }
 
@@ -45,8 +48,6 @@
 
 .piece {
     position: absolute;
-    top: 25vh;
-    left: 5vh;
     display: block;
 }
 #puzzle>.row>div.placed-piece {

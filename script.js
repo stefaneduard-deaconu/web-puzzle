@@ -141,6 +141,20 @@ window.onload = function() {
             puzzleDiv.style.top = e.clientY
         }
 
+        // before appending it, we need to chose its position:
+        // (1) we compute possible positions
+
+        // (2) we randomly choose one
+        minY = puzzleDiv.getBoundingClientRect().top
+        maxY = puzzleDiv.getBoundingClientRect().bottom - pieceHeight
+        maxX = puzzleDiv.clientWidth - pieceWidth
+        console.log(maxX)
+        // y must be between minY and maxY
+        y = Math.random() * (maxY - minY) + minY
+        // x must be less than maxX
+        x = Math.random() * maxX
+        image.style.top = y
+        image.style.left = x
         puzzleDiv.appendChild(image)
     }
 
