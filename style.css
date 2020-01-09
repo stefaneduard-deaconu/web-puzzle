@@ -1,0 +1,54 @@
+#picture {
+    margin: 0;
+}
+#picture>img {
+    margin: auto;
+    display: block;
+    height: 20vh;
+}
+#puzzle {
+    height: 70vh;
+    background-color: whitesmoke;
+}
+#footer {
+    font-family: sans-serif;
+    font-size: small;
+    text-align: center;
+    margin-top: 3vh;
+    height: 4vh;
+}
+
+
+
+#picture>img:hover {
+    height: 90vh;
+    
+    z-index: -1;
+
+}
+
+
+
+#puzzle>.row {
+    margin: 0;
+}
+#puzzle>.row>div {
+    background-color: grey;
+    display:inline-block;
+    border: 1px solid white
+}
+
+/* for the images */
+#puzzle {
+    /* position: absolute; */
+}
+
+.piece {
+    position: absolute;
+    top: 25vh;
+    left: 5vh;
+    display: block;
+}
+#puzzle>.row>div.placed-piece {
+    /* border: 1px dotted cyan; */
+}
